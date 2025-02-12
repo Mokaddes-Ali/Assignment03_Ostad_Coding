@@ -18,5 +18,5 @@ function generatePascalsTriangle(numRows) {
     return triangle;
 }
 
-console.log('Generate Pascals Triangle');
+console.log('Task 1: Generate Pascals Triangle');
 console.log(generatePascalsTriangle(5));
