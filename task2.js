@@ -1,53 +1,46 @@
-function maximumGap(nums) {
-    if (nums.length < 2) return 0;
 
-    function radixSort(arr) {
-        let maxNum = Math.max(...arr);
-        let exp = 1;
-        let n = arr.length;
-        let output = new Array(n);
+function encryptString(s) {
+    let transformed = "";
+    let count = 1;
 
-        while (maxNum / exp >= 1) {
-            let count = new Array(10).fill(0);
-
-
-            for (let i = 0; i < n; i++) {
-                count[Math.floor(arr[i] / exp) % 10]++;
-            }
-
-
-            for (let i = 1; i < 10; i++) {
-                count[i] += count[i - 1];
-            }
-
-            for (let i = n - 1; i >= 0; i--) {
-                let digit = Math.floor(arr[i] / exp) % 10;
-                output[count[digit] - 1] = arr[i];
-                count[digit]--;
-            }
-
-            for (let i = 0; i < n; i++) {
-                arr[i] = output[i];
-            }
-
-            exp *= 10;
+    for (let i = 1; i <= s.length; i++) {
+        if (s[i] === s[i - 1]) {
+            count++;
+        } else {
+            transformed += count + s[i - 1];
+            count = 1;
         }
     }
 
-    radixSort(nums);
+    let encrypted = transformed.split('').reverse().join('');
 
-
-    let maxGap = 0;
-    for (let i = 1; i < nums.length; i++) {
-        maxGap = Math.max(maxGap, nums[i] - nums[i - 1]);
-    }
-
-    return maxGap;
+    return encrypted;
 }
 
-//output
-console.log('Task 2: Maximum Gap of Sorted Array');
-console.log(maximumGap([3, 6, 9, 1])); 
-console.log(maximumGap([10])); 
-console.log(maximumGap([1, 10000000]));
+
+function decryptString(s) {
+    let reversed = s.split('').reverse().join('');
+
+    let decrypted = "";
+    for (let i = 0; i < reversed.length; i++) {
+        if (!isNaN(reversed[i])) {
+            let count = parseInt(reversed[i], 10);
+            let char = reversed[i + 1];
+            decrypted += char.repeat(count);
+            i++; 
+        }
+    }
+
+    return decrypted;
+}
+
+
+// Example 
+let input = "aaaaaaaaaaa";
+let encrypted = encryptString(input);
+console.log("Encrypted:", encrypted);
+
+let decrypted = decryptString(encrypted);
+console.log("Decrypted:", decrypted);
+
 
