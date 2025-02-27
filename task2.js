@@ -1,46 +1,35 @@
+function findKthCharacter(k) {
+    let word = "a"; 
+    
 
-function encryptString(s) {
-    let transformed = "";
-    let count = 1;
-
-    for (let i = 1; i <= s.length; i++) {
-        if (s[i] === s[i - 1]) {
-            count++;
-        } else {
-            transformed += count + s[i - 1];
-            count = 1;
+    while (word.length < k) {
+        let newPart = ''; 
+        
+        for (let char of word) {
+            if (char === 'z') {
+                newPart += 'a'; 
+            } else {
+                newPart += String.fromCharCode(char.charCodeAt(0) + 1); 
+            }
         }
+        
+        word += newPart;
     }
-
-    let encrypted = transformed.split('').reverse().join('');
-
-    return encrypted;
+    
+    return word[k - 1];
 }
 
+// Example 1:
+let k1 = 5;
+console.log(`Example 1: k = ${k1}, Output = "${findKthCharacter(k1)}"`);
 
-function decryptString(s) {
-    let reversed = s.split('').reverse().join('');
+// Example 2:
+let k2 = 10;
+console.log(`Example 2: k = ${k2}, Output = "${findKthCharacter(k2)}"`);
 
-    let decrypted = "";
-    for (let i = 0; i < reversed.length; i++) {
-        if (!isNaN(reversed[i])) {
-            let count = parseInt(reversed[i], 10);
-            let char = reversed[i + 1];
-            decrypted += char.repeat(count);
-            i++; 
-        }
-    }
+// Example 3:
+let k3 = 1;
+console.log(`Example 3: k = ${k3}, Output = "${findKthCharacter(k3)}"`);
 
-    return decrypted;
-}
-
-
-// Example 
-let input = "aaaaaaaaaaa";
-let encrypted = encryptString(input);
-console.log("Encrypted:", encrypted);
-
-let decrypted = decryptString(encrypted);
-console.log("Decrypted:", decrypted);
-
-
+let k4 = 26;
+console.log(`Example 4: k = ${k4}, Output = "${findKthCharacter(k4)}"`);
